@@ -1,15 +1,24 @@
 local function reveal()
   -- @TODO: Make this work on macOS and Windows
-  -- local sysname = vim.loop.os_uname().sysname
+  local sysname = vim.loop.os_uname().sysname
 
   local currentBuffer = vim.api.nvim_get_current_buf()
   local bufName = vim.api.nvim_buf_get_name(currentBuffer)
   local ftype = vim.fn.getftype(bufName)
 
-  if ftype == "dir" then
-    os.execute("xdg-open " .. bufName)
+  local open_cmd
+  if sysname == "Darwin" then
+    open_cmd = "open"
+  elseif sysname == "Windows_NT" then
+    open_cmd = "start"
   else
-    os.execute("xdg-open " .. vim.fn.expand("%:p:h"))
+    open_cmd = "xdg-open"
+  end
+
+  if ftype == "dir" then
+    os.execute(open_cmd .. " " .. bufName)
+  else
+    os.execute(open_cmd .. " " .. vim.fn.expand("%:p:h"))
   end
 end
 
