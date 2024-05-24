@@ -1,5 +1,4 @@
 local function reveal()
-  -- @TODO: Make this work on macOS and Windows
   local sysname = vim.loop.os_uname().sysname
 
   local currentBuffer = vim.api.nvim_get_current_buf()
@@ -39,10 +38,10 @@ local function setup(options)
     function()
       reveal()
     end,
-    { desc = "xdg-open" }
+    { desc = "xdg-open/open/start" }
   )
 
-  vim.keymap.set("n", trigger_key, ":Reveal<CR>", { noremap = true, desc = "[R]eveal with xdg-open" })
+  vim.keymap.set("n", trigger_key, ":Reveal<CR>", { noremap = true, desc = "[R]eveal with xdg-open/open/start" })
 end
 
 return {
